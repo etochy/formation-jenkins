@@ -6,5 +6,11 @@ pipeline {
                 git url: "https://github.com/etochy/formation-jenkins.git", branch: "main"
             }
         }
+        stage("Build") {
+            steps {
+                echo "Start build"
+                sh "mvn clean compile"
+            }
+        }
     }
 }
