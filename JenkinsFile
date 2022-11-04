@@ -45,14 +45,19 @@ pipeline {
                 sh "mvn install"
             }
         }
+        stage("Docker login") {
+            steps {
+                sh "docker login --username etochy --password ${PASSWORD_DOCKER_HUB} "
+            }
+        }
         stage("Docker build") {
             steps {
-                sh "docker build -t admin/calculator ."
+                sh "docker build -t etochy/calculator ."
             }
         }
         stage("Docker push") {
             steps {
-                sh "docker push admin/calculator ."
+                sh "docker push etochy/calculator"
             }
         }
         stage("Deploy to staging") {
