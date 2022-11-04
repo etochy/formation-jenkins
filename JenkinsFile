@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        VAR_PASSWORD_DOCKER_HUB = credentials('PASSWORD_DOCKER_HUB')
+        VAR_PASSWORD_DOCKER_HUB = credentials('docker-hub-pwd')
     }
     tools {
         maven 'mvn'
