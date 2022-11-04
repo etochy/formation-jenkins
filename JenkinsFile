@@ -30,7 +30,6 @@ pipeline {
                 ])
             }
         }
-
         stage("Check style") {
             steps {
                 sh "mvn site"
@@ -39,6 +38,32 @@ pipeline {
                     reportFiles: 'index.html',
                     reportName: 'Checkstyle Report'
                 ])
+            }
+        }
+        stage("Package") {
+            steps {
+                sh "mvn install"
+            }
+        }
+        stage("Docker build") {
+            steps {
+                sh "docker build -t admin/calculator ."
+            }
+        }
+        stage("Docker push") {
+            steps {
+                sh "docker push admin/calculator ."
+            }
+        }
+        stage("Deploy to staging") {
+            steps {
+                sh "docker run -d --rm -p 8083:8083 --name calculator admin/calculator"
+            }
+        }
+        stage("Acceptance test") {
+            steps {
+                sleep 60
+                sh "chmod +x test_accept.sh && ./test_accept.sh"
             }
         }
     }
