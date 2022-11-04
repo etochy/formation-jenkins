@@ -30,5 +30,16 @@ pipeline {
                 ])
             }
         }
+
+        stage("Check style") {
+            steps {
+                sh "mvn site"
+                publishHTML (target: [
+                    reportDir: 'target/site/',
+                    reportFiles: 'index.html',
+                    reportName: 'Checkstyle Report'
+                ])
+            }
+        }
     }
 }
