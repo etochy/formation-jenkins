@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        VAR_PASSWORD_DOCKER_HUB = EXAMPLE_CREDS = credentials('PASSWORD_DOCKER_HUB')
+    }
     tools {
         maven 'mvn'
     }
@@ -46,9 +49,6 @@ pipeline {
             }
         }
         stage("Docker login") {
-            environment {
-                VAR_PASSWORD_DOCKER_HUB = EXAMPLE_CREDS = credentials('PASSWORD_DOCKER_HUB')
-            }
             steps {
                 sh "docker login --username etochy --password-stdin $VAR_PASSWORD_DOCKER_HUB "
             }
