@@ -46,8 +46,11 @@ pipeline {
             }
         }
         stage("Docker login") {
+            environment {
+                VAR_PASSWORD_DOCKER_HUB = EXAMPLE_CREDS = credentials('PASSWORD_DOCKER_HUB')
+            }
             steps {
-                sh "docker login --username etochy --password-stdin $PASSWORD_DOCKER_HUB "
+                sh "docker login --username etochy --password-stdin $VAR_PASSWORD_DOCKER_HUB "
             }
         }
         stage("Docker build") {
